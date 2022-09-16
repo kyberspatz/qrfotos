@@ -69,7 +69,7 @@ if(is_dir("assets/phpqrcode") && is_dir("qrcodes") &&is_dir("assets") && is_dir(
 include("_worker.php"); echo $header;
 
 // Letzter Check: Wurde die URL gesetzt? Das ist absolut wichtig für die korrekte Generierung der QR-Codes
-if(empty($config["url" ]))
+if(strlen($config["url"]<3))
 {
 	echo '<div class="w3-panel w3-red"><p>Bitte in der <b>_worker.php</b> Zeile #4  noch die URL eintragen.</p></div>';
 } else 

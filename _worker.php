@@ -124,4 +124,8 @@ $bildpw = secure_random_string(36);
 // Falls der abschließende Slash in der URL vergessen wurde, wird er hier nochmal automatisch korrigiert
 if(substr($config["url" ],-1) !== "/"){$config["url" ] = $config["url" ]."/";}
 
+if(strlen($config["url"]<3))
+{
+	$header.= '<div class="w3-panel w3-red"><p>Bitte in der <b>_worker.php</b> Zeile #4  noch die URL eintragen.</p></div>';
+}
 ?>
