@@ -51,6 +51,9 @@ if ($res === TRUE)
 	
 // Die .zip-Datei wird nicht mehr gebraucht und nun gelöscht.
 	unlink("assets/".$file);
+	
+	
+	
 } else {
 
 // Falls jetzt etwas nicht funktioniert, liegt es vermutlich an den nicht korrekt gesetzten Schreibrechten.
@@ -69,12 +72,11 @@ include("_worker.php"); echo $header;
 if(empty($config["url" ]))
 {
 	echo '<div class="w3-panel w3-red"><p>Bitte in der <b>_worker.php</b> Zeile #4  noch die URL eintragen.</p></div>';
-} else {}
+} else 
+{
+	echo '<p>Setup okay. Alles funktioniert.<p>';
+}
 
-exit;
-//http://192.168.0.7/auftrag/fotobox/
-
-echo '<p>Setup okay. Alles funktioniert.<p>';
 } 
 // Falls nicht alle Dateien da sind, ist irgendetwas beim Setup schief gelaufen.
 else {echo '<p style=" font-family: Arial, sans-serif;">Das Setup ist nicht vollständig.</p>';}
