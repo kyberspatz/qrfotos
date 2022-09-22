@@ -31,6 +31,18 @@ if(!is_dir("qrcodes")){mkdir("qrcodes");}
 // Falls es das Verzeichnis "fotos" noch nicht gibt, wird es erstellt.
 if(!is_dir("fotos")){mkdir("fotos");}
 
+// Falls es das Verzeichnis "fotos" noch nicht gibt, wird es erstellt.
+if(!is_dir("upload")){mkdir("upload");}
+
+// upload.php wird in das Verzeichnis /upload verschoben
+if(is_file("upload.php")){rename("upload.php", "upload/upload.php");}
+
+// qr_code_liste.php wird in das Verzeichnis /upload verschoben
+if(is_file("qr_code_liste.php")){rename("qr_code_liste.php", "upload/qr_code_liste.php");}
+
+// upload.index.php wird in das Verzeichnis /upload verschoben und in index.php umbenannt
+if(is_file("upload_index.php")){rename("upload_index.php", "upload/index.php");}
+
 // Falls es die Datei "w3.css" noch nicht gibt, wird es erstellt. Es ist das CSS-Framework, dass die Seite aufhübscht.
 if(!is_file("assets/w3.css")){file_put_contents("assets/w3.css",file_get_contents("https://www.w3schools.com/w3css/4/w3.css"));}
 
@@ -60,10 +72,14 @@ if ($res === TRUE)
 echo "Konnte .zip-Datei $file nicht öffnen. Sind die Schreibrechte korrekt gesetzt?"; exit;
 }
 }
-} 
+}
+
+
+
+   
 
 // Nochmal ein Check, ob jetzt alles wichtige da ist
-if(is_dir("assets/phpqrcode") && is_dir("qrcodes") &&is_dir("assets") && is_dir("fotos") && is_file("assets/w3.css"))
+if(is_dir("assets/phpqrcode") && is_dir("qrcodes") &&is_dir("assets") && is_dir("fotos") && is_dir("upload") && is_file("assets/w3.css"))
 // Falls alles wichtigen Dateien da sind
 {
 include("_worker.php"); echo $header;
@@ -72,6 +88,7 @@ include("_worker.php"); echo $header;
 if(strlen($config["url"]>3))
 {
 	echo '<p>Setup okay. Alles funktioniert.<p>';
+	header("Location: index.php");
 }
 
 } 

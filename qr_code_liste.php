@@ -1,10 +1,10 @@
 <?php
 
 // Worker einbinden
-include_once("_worker.php");
+include_once("../_worker.php");
 
 // Header einbinden
-echo $header;	
+echo $header_upload;	
 
 // In der stichworte.php stehen die Stichworte zu den QR-Dateien. Falls es die Datei noch nicht gibt, wurde noch kein Bild erstellt.
 if(!is_file("stichworte.php")){

@@ -1,10 +1,10 @@
 <?php
 
 // Den Worker laden
-include_once("_worker.php");
+include_once("../_worker.php");
 
 // Den Header anzeigen
-echo $header;
+echo $header_upload;
 
 // Falls noch nichts hochgeladen wurde, wird nun das Formular angezeigt.
 if(!isset($_POST["submit"])) 
@@ -34,7 +34,7 @@ if(!isset($_POST["submit"]))
 else {
 
 // Das Zielverzeichnis ist der Bildordner (Festgelegt im Worker)
-$target_dir = $bildordner;
+$target_dir = $bildordner_upload;
 
 // Die Zieldatei wird nochmals genau beschrieben
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -86,21 +86,30 @@ if ($_FILES["fileToUpload"]["size"] > ($begrenzung_mb*1000000)) {
 }
 
 // Hier erlauben wir nur bestimmte Dateiformate
+if(!in_array($imageFileType,$erlaubte_dateiendungen)){
+/*
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
-  echo "<p>Sorry, momentan sind nur JPG, JPEG, PNG & GIF Bilder erlaubt.</p>";
+	*/
+  echo "<p>Sorry, nur folgende Dateiendungen sind erlaubt: <b>";
+  for($a=0;$a<count($erlaubte_dateiendungen)-1;$a++)
+	  {
+		echo ".".$erlaubte_dateiendungen[$a].", ";
+	  }
+	echo "</b> oder <b>.".$erlaubte_dateiendungen[count($erlaubte_dateiendungen)-1];
+  echo "</b>.</p>";
   $uploadOk = 0;
 }
 
 // Checken, ob der Upload in Ordnung ist, oder ob es Fehler gibt
 if ($uploadOk == 0) {
-  echo "Das Bild konnte nicht hochgeladen werden.";
+  echo "Die Datei konnte nicht hochgeladen werden.";
 
 // Falls alles Parameter stimmen, wird nun versucht, das Bild auf den Server hochzuladen.
 } else {
 	$bildendung = ".".$imageFileType;
 	file_put_contents($_FILES["fileToUpload"]["tmp_name"],encrypt(base64_encode(file_get_contents($_FILES["fileToUpload"]["tmp_name"])),$bildpw));
-  if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $bildordner.$bildname.$bildendung)) {
+  if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $bildordner_upload.$bildname.$bildendung)) {
 	 
 	// Falls es die Datei stichworte.php noch nicht gibt, wird sie nun angelegt. 
 	if(!is_file("stichworte.php"))
@@ -128,7 +137,7 @@ $put[] = '<?php
 	}
 	
 // Jetzt wird der QR-Parser eingebunden
-include 'assets/phpqrcode/qrlib.php';
+include '../assets/phpqrcode/qrlib.php';
 
 //Das ist der Text für den QR-Code. er besteht aus der Domain-URL, dem Bildnamen und dem Passwort, mit dem das Bild dann entschlüsselt wird.
 
@@ -150,7 +159,7 @@ echo "<center><img src='".$file."' style='max-width:20vw;'></center>";
 echo "<hr>";
 
 // Links
-echo '<p><a href="view.php?bild='.$bildname.$bildendung.'&c='.$bildpw.'" class="w3-button w3-black">Bildvorschau</a></p>';
+echo '<p><a href="../view.php?bild='.$bildname.$bildendung.'&c='.$bildpw.'" class="w3-button w3-black">Bildvorschau</a></p>';
 echo '<p><a href="upload.php" class="w3-button w3-black">Noch ein Bild hochladen</a></p>';
 
   } else {
